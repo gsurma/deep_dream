@@ -54,7 +54,7 @@ class DeepDream:
             gradient = gaussian_filter(gradient, sigma=(BLUR_SIGMA, BLUR_SIGMA, 0))
             scaled_step_size = step_size / (np.std(gradient) + 1e-8)
             image += gradient * scaled_step_size
-            print("iteration: " + str(i) + " out of: " + str(iterations))
+            print("iteration " + str(i) + " out of " + str(iterations), end="\r" if i != iterations-1 else "\r\033[K")
         return image
     
     def recursively_optimize(self, layer, image, levels, rescale_factor, blend, iterations, step_size):
@@ -75,8 +75,8 @@ class DeepDream:
             upscaled = resize_image(image=final_image, size=image.shape[0:2])
             
             image = blend * image + (1.0 - blend) * upscaled
-        print("")
-        print("level: " + str(levels))
+
+        print("\rlevel " + str(levels) + " out of " + str(LEVELS))
         final_image = self.optimize_image(layer=layer,
                                           image=image,
                                           iterations=iterations,
@@ -102,7 +102,7 @@ def main():
     final_image = image
     deep_dream = DeepDream(model)
     for i, layer_index in enumerate(layer_indices):
-        print("layer: " + str(i) + " out of: " + str(len(layer_indices)))
+        print("LAYER " + model.layer_names[layer_index] + ", " + str(i) + " out of " + str(len(layer_indices)))
         layer = model.layers[layer_index]
         final_image = deep_dream.recursively_optimize(layer=layer,
                                                       image=final_image,
