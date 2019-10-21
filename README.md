@@ -26,7 +26,7 @@ to perform on the random image.
 
 We are using **Inception5h** model which was designed to classify images. 
 
-During the classification process we are providing input images and using gradient descent to match weights to the images. 
+During the classification process we are providing input images and using gradient descent to adapt weights to the images through filters. 
 
 **DeepDream** algorithm does the opposite. It adapts the input images to match the network weights with **gradient ascent** which results in visualizing network filters on the input images giving them psychodelic look.
 
