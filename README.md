@@ -6,7 +6,7 @@
 
 Minimal Python/TensorFlow implementation of the DeepDream algorithm originally created by [Alexander Mordvintsev](https://ai.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html).
 
-[Daily dose of deep dreams on instagram](https://www.instagram.com/__deep__dreams__/)
+<center><a href="https://www.instagram.com/__deep__dreams__/">Daily dose of deep dreams on instagram.</a></center>
 
 
 
