@@ -4,7 +4,6 @@ from PIL import Image
 from io import BytesIO
 from scipy.ndimage.filters import gaussian_filter          
 import tensorflow as tf
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 from inception import Inception
 from utilities import save_image, resize_image, normalize_image
 
@@ -23,7 +22,7 @@ LAYER_INDICES = None # e.g [3, 5, 9]
 
 # Or pick them randomly with the following bound parameters
 MIN_OPERATIONS = 2
-MAX_OPERATIONS = 7
+MAX_OPERATIONS = 5
 MIN_LAYER = 2
 MAX_LAYER = 10
 
@@ -55,9 +54,11 @@ class DeepDream:
             gradient = gaussian_filter(gradient, sigma=(BLUR_SIGMA, BLUR_SIGMA, 0))
             scaled_step_size = step_size / (np.std(gradient) + 1e-8)
             image += gradient * scaled_step_size
+            print("iteration: " + str(i) + " out of: " + str(iterations))
         return image
     
     def recursively_optimize(self, layer, image, levels, rescale_factor, blend, iterations, step_size):
+        
         if levels > 0:
             blurred = gaussian_filter(image, sigma=(BLUR_SIGMA, BLUR_SIGMA, 0))
 
@@ -74,7 +75,8 @@ class DeepDream:
             upscaled = resize_image(image=final_image, size=image.shape[0:2])
             
             image = blend * image + (1.0 - blend) * upscaled
-
+        print("")
+        print("level: " + str(levels))
         final_image = self.optimize_image(layer=layer,
                                           image=image,
                                           iterations=iterations,
@@ -99,7 +101,8 @@ def main():
         
     final_image = image
     deep_dream = DeepDream(model)
-    for layer_index in layer_indices:
+    for i, layer_index in enumerate(layer_indices):
+        print("layer: " + str(i) + " out of: " + str(len(layer_indices)))
         layer = model.layers[layer_index]
         final_image = deep_dream.recursively_optimize(layer=layer,
                                                       image=final_image,
