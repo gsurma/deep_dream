@@ -51,8 +51,3 @@ During the classification process we are providing input images and using gradie
 [**GITHUB**](https://github.com/gsurma)
 
 [**BLOG**](https://medium.com/@gsurma)
-
-<a href="https://www.paypal.com/paypalme2/grzegorzsurma115">
-  <img alt="Support via PayPal" src="https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg"/>
-</a>
-
